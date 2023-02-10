@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.getenv('DEBUG')))
+DEBUG = False
 
 ALLOWED_HOSTS = [os.getenv('HOST')]
 
-
+WHITENOISE_MANIFEST_STRICT = False
 # Application definition
 
 INSTALLED_APPS = [
