@@ -366,4 +366,3 @@ pip-selfcheck.json
 django.config
 static-files.config
 trackify.zip
-/staticfiles/
