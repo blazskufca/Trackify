@@ -8,25 +8,37 @@ Focused mostly on Slovenian retailers, although it does also accept amazon.de.
 
 **Supports: www.amazon.de, www.bigbang.si, www.enaa.com and www.funtech.si**
 
-## Demo
+## Run a instance with docker
+To run with docker:
 
-**An instance is running at: http://trackify-env-1.eba-9g8g5ghp.eu-central-1.elasticbeanstalk.com/**
-
-## Run locally
-**Local image is meant for running locally - Runs with "debug = True" and is served with Django's development server!**
-
-To run locally with docker:
-
+1.) Clone the repo
 ```
 git clone https://github.com/blazskufca/Trackify.git
-git switch local
-docker-compose up -d
+cd Trackify
 ```
-If you need a superuser account (for localhost:8000/admin/)
+2.) Create a .env file with the following keys
+```
+KEY=YOUR_SECRET_KEY
+DEBUG=0 or 1 [0 is debug = False, 1 is debug = True]
+DB_HOST=db *leave as is, if changed change also docker-compose.yml
+DB_PORT=5432 *Can be left as is
+HOST=localhost *Can be left as is
+POSTGRES_USER=YOUR_POSTGRE_USERNAME
+POSTGRES_PASSWORD=YOUR_POSTGRE_PASSWORD
+POSTGRES_DB=YOUR_POSTGRE_DATABASE_NAME
+```
 
-`docker-compose exec -it trackify python manage.py createsuperuser`
+3.) `docker-compose up -d`
 
-And follow the prompts in the terminal. You should have a superuser account by the end of it, with which you can login into the admin panel.
+
+4.) Make database migrations
+
+`docker-compose exec web python manage.py migrate --noinput`
+
+5.) Create a superuser account
+`docker-compose exec -it web python manage.py createsuperuser`
+
+**An instance should be running on localhost:80**
 
 ## TODO
 
