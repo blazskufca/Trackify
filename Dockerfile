@@ -12,7 +12,6 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev
-
 RUN pip install --upgrade pip
 
 
@@ -46,20 +45,17 @@ COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache /wheels/*
 
-# copy entrypoint.prod.sh
+# copy entrypoint.sh
 COPY ./entrypoint.sh .
 RUN sed -i 's/\r$//g'  $APP_HOME/entrypoint.sh
 RUN chmod +x  $APP_HOME/entrypoint.sh
 
 # copy project
-COPY . $APP_HOME
-COPY ./scheduler $APP_HOME
-COPY ./scheduler $APP_HOME
-COPY ./staticfiles $APP_HOME
-COPY ./templates $APP_HOME
-COPY ./trackify $APP_HOME
-COPY ./tracker $APP_HOME
-COPY ./entrypoint.sh $APP_HOME
+COPY ./scheduler $APP_HOME/scheduler
+COPY ./staticfiles $APP_HOME/staticfiles
+COPY ./templates $APP_HOME/templates
+COPY ./tracker $APP_HOME/tracker
+COPY ./trackify $APP_HOME/trackify
 COPY ./manage.py $APP_HOME
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
