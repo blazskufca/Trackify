@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+
 # Create your models here.
 class TrackedProducts(models.Model):
     name = models.CharField(max_length=500, null=False, unique=True, blank=False)
@@ -9,13 +11,17 @@ class TrackedProducts(models.Model):
     modifiedDate = models.DateTimeField(auto_now=True)
     priceHistory = models.JSONField()
     description = models.TextField()
+
     class Meta:
-        verbose_name_plural = 'Products'
+        verbose_name_plural = "Products"
 
     def __str__(self):
         return self.name
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(TrackedProducts)
+
     def __str__(self):
         return self.user.username

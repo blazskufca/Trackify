@@ -1,16 +1,21 @@
-from tracker.tracker_logic import BigBangTracker, AmazonDeTracker, EnaATracker, FuntechTracker
+from tracker.tracker_logic import (
+    BigBangTracker,
+    AmazonDeTracker,
+    EnaATracker,
+    FuntechTracker,
+)
 from tracker.models import TrackedProducts
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
 def job():
     for item in TrackedProducts.objects.all():
-        if item.link[:23] == 'https://www.bigbang.si/':
+        if item.link[:23] == "https://www.bigbang.si/":
             try:
                 BigBangTracker().update(item.link)
             except:
                 pass
-        elif item.link[:22] == 'https://www.amazon.de/':
+        elif item.link[:22] == "https://www.amazon.de/":
             try:
                 AmazonDeTracker().update(item.link)
             except:
@@ -29,5 +34,5 @@ def job():
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(job, 'interval', days=1)
+    scheduler.add_job(job, "interval", days=1)
     scheduler.start()
