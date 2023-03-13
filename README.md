@@ -67,4 +67,3 @@ Detailed view:
 
 Personal profile
 ![Personal profile](https://i.ibb.co/dJddg03/image.png "Personal profile")
-git 
