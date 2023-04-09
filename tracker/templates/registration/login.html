@@ -10,18 +10,18 @@
 {% block title %}Login - Trackify{% endblock title %}
 {% block body_class %}d-flex h-100 text-white bg-dark{% endblock body_class %}
 {% block content %}
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    {% include 'tracker/includes/navbar.html' %}
-  <main class="px-3">
-      <h1 class="text-center">Login</h1>
-       <form method="POST">
-           {% csrf_token %}
-           {{ form|crispy }}
-           <button type="submit" class="btn btn-primary float-end">Login</button>
-       </form>
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        {% include 'tracker/includes/navbar.html' %}
+        <main class="px-3">
+            <h1 class="text-center">Login</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary float-end">Login</button>
+            </form>
 
-  </main>
-          <p class="text-center">Don't have an account? <a href="{% url 'register' %}">Register!</a> </p>
-    <div class="mt-auto text-center">{% include 'tracker/includes/footer.html' %}</div>
-</div>
+        </main>
+        <p class="text-center">Don't have an account? <a href="{% url 'register' %}">Register!</a></p>
+        <div class="mt-auto text-center">{% include 'tracker/includes/footer.html' %}</div>
+    </div>
 {% endblock content %}

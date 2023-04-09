@@ -1,25 +1,32 @@
-main{
+main {
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
+
 .card-spacer:last-of-type {
     display: none;
 }
+
 #see-all-btn {
     margin-top: 1rem;
 }
-#about-title{
- margin-bottom: 2rem;
+
+#about-title {
+    margin-bottom: 2rem;
 }
-#pagination{
+
+#pagination {
     margin-top: 2rem;
 }
+
 #description-card {
     margin-bottom: 2rem;
 }
+
 #tracked {
     margin-bottom: 2rem;
 }
+
 #see-my-btn {
     margin-top: 1rem;
 }

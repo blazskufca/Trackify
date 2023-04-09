@@ -1,12 +1,12 @@
-import requests
 import datetime
-from bs4 import BeautifulSoup
-from babel.numbers import parse_decimal
-from . import models
 import json
 from datetime import date
-from django.utils.timezone import make_aware
 import cloudscraper
+import requests
+from babel.numbers import parse_decimal
+from bs4 import BeautifulSoup
+from django.utils.timezone import make_aware
+from . import models
 
 
 class BigBangTracker:
@@ -20,7 +20,7 @@ class BigBangTracker:
                 .contents[0]
                 .getText()
                 .strip()
-                .replace(" €", ""),
+                .replace(" Ã¢â€šÂ¬", ""),
                 locale="sl_SI",
             )
             title = soup.select_one(".cd-title").getText().strip()
@@ -47,7 +47,7 @@ class BigBangTracker:
                 .contents[0]
                 .getText()
                 .strip()
-                .replace(" €", ""),
+                .replace(" Ã¢â€šÂ¬", ""),
                 locale="sl_SI",
             )
             instance = models.TrackedProducts.objects.get(link=url)
@@ -73,9 +73,10 @@ class AmazonDeTracker:
                 "cache-control": "no-cache",
                 "dnt": "1",
                 "upgrade-insecure-requests": "1",
-                "user-agent": "Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36",
+                "user-agent": "Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) "
+                              "Chrome/51.0.2704.64 Safari/537.36",
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
-                "image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                          "image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                 "sec-fetch-site": "none",
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-dest": "document",
@@ -88,7 +89,7 @@ class AmazonDeTracker:
             temp = (
                 soup.select_one(".a-offscreen")
                 .getText()
-                .replace("€", "")
+                .replace("Ã¢â€šÂ¬", "")
                 .replace(",", "")
             )
             price = float(temp)
@@ -114,9 +115,10 @@ class AmazonDeTracker:
                 "cache-control": "no-cache",
                 "dnt": "1",
                 "upgrade-insecure-requests": "1",
-                "user-agent": "Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36",
+                "user-agent": "Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) "
+                              "Chrome/51.0.2704.64 Safari/537.36",
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
-                "image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                          "image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                 "sec-fetch-site": "none",
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-dest": "document",
@@ -129,7 +131,7 @@ class AmazonDeTracker:
             temp = (
                 soup.select_one(".a-offscreen")
                 .getText()
-                .replace("€", "")
+                .replace("Ã¢â€šÂ¬", "")
                 .replace(",", "")
             )
             price = float(temp)
@@ -155,7 +157,7 @@ class EnaATracker:
                 soup.select_one(".single-product-price")
                 .getText()
                 .strip()
-                .replace(" €", ""),
+                .replace(" Ã¢â€šÂ¬", ""),
                 locale="sl_SI",
             )
             title = soup.select_one(".section-title").getText().strip()
@@ -186,7 +188,7 @@ class EnaATracker:
                 soup.select_one(".single-product-price")
                 .getText()
                 .strip()
-                .replace(" €", ""),
+                .replace(" Ã¢â€šÂ¬", ""),
                 locale="sl_SI",
             )
             instance = models.TrackedProducts.objects.get(link=url)
@@ -211,8 +213,8 @@ class FuntechTracker:
                 soup.select_one(".nasa_cena")
                 .getText()
                 .strip()
-                .replace("Naša cena:  ", "")
-                .replace(" €", ""),
+                .replace("NaÃ…Â¡a cena:  ", "")
+                .replace(" Ã¢â€šÂ¬", ""),
                 locale="sl_SI",
             )
             title = soup.select_one(".naslov_ogled_artikla").getText().strip()
@@ -238,8 +240,8 @@ class FuntechTracker:
                 soup.select_one(".nasa_cena")
                 .getText()
                 .strip()
-                .replace("Naša cena:  ", "")
-                .replace(" €", ""),
+                .replace("NaÃ…Â¡a cena:  ", "")
+                .replace(" Ã¢â€šÂ¬", ""),
                 locale="sl_SI",
             )
             instance = models.TrackedProducts.objects.get(link=url)

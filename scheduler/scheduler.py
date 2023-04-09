@@ -1,11 +1,12 @@
+from apscheduler.schedulers.background import BackgroundScheduler
+
+from tracker.models import TrackedProducts
 from tracker.tracker_logic import (
     BigBangTracker,
     AmazonDeTracker,
     EnaATracker,
     FuntechTracker,
 )
-from tracker.models import TrackedProducts
-from apscheduler.schedulers.background import BackgroundScheduler
 
 
 def job():

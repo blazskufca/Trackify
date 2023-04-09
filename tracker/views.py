@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from . import models
-from .tracker_logic import BigBangTracker, AmazonDeTracker, EnaATracker, FuntechTracker
-from babel.numbers import format_currency
-from . import forms
 import json
-from django.core.paginator import Paginator
+from babel.numbers import format_currency
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect, get_object_or_404
+from . import forms
+from . import models
+from .tracker_logic import BigBangTracker, AmazonDeTracker, EnaATracker, FuntechTracker
 
 
 def is_auth(request, search):
@@ -41,25 +41,25 @@ def home(request):
         if form.is_valid():
             search = form.cleaned_data.get("search")
             if not models.TrackedProducts.objects.filter(link=search).exists() and (
-                search[:23] == "https://www.bigbang.si/"
+                    search[:23] == "https://www.bigbang.si/"
             ):
                 BigBangTracker().scrape(search)
                 return redirect("product_details", is_auth(request, search).pk)
 
             elif not models.TrackedProducts.objects.filter(link=search).exists() and (
-                search[:22] == "https://www.amazon.de/"
+                    search[:22] == "https://www.amazon.de/"
             ):
                 AmazonDeTracker().scrape(search)
                 return redirect("product_details", is_auth(request, search).pk)
 
             elif not models.TrackedProducts.objects.filter(link=search).exists() and (
-                search[:21] == "https://www.enaa.com/"
+                    search[:21] == "https://www.enaa.com/"
             ):
                 EnaATracker().scrape(search)
                 return redirect("product_details", is_auth(request, search).pk)
 
             elif not models.TrackedProducts.objects.filter(link=search).exists() and (
-                search[:23] == "https://www.funtech.si/"
+                    search[:23] == "https://www.funtech.si/"
             ):
                 FuntechTracker().scrape(search)
                 return redirect("product_details", is_auth(request, search).pk)
@@ -72,22 +72,22 @@ def home(request):
                     profile = models.Profile.objects.get(user=request.user)
                     context = {
                         "err": "You tried to do something which is not allowed.\n"
-                        "Only links from www.enaa.com, www.funtech.si, bigbang.si, and amazon.de are supported "
-                        "right now!",
+                               "Only links from www.enaa.com, www.funtech.si, bigbang.si, and amazon.de are supported "
+                               "right now!",
                         "recently": models.TrackedProducts.objects.order_by("-date")[
-                            :3
-                        ],
+                                    :3
+                                    ],
                         "form": forms.SearchForm(),
                         "tracked": profile.items.all()[:3],
                     }
                 else:
                     context = {
                         "err": "You tried to do something which is not allowed.\n"
-                        "Only links from www.enaa.com, www.funtech.si, bigbang.si, and amazon.de are supported "
-                        "right now!",
+                               "Only links from www.enaa.com, www.funtech.si, bigbang.si, and amazon.de are supported "
+                               "right now!",
                         "recently": models.TrackedProducts.objects.order_by("-date")[
-                            :3
-                        ],
+                                    :3
+                                    ],
                         "form": forms.SearchForm(),
                     }
                 return render(request, "tracker/index.html", context)

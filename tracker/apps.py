@@ -8,9 +8,6 @@ class TrackerConfig(AppConfig):
     def ready(self):
         from scheduler import scheduler
         from django.contrib.auth.models import Group
-        from django.conf import settings
-        from django.db.models.signals import post_save
-        import tracker.signals
 
         def add_to_default_group(sender, **kwargs):
             # Instance is the user model that was created

@@ -7,57 +7,58 @@
 {% block body_class %}d-flex h-100 text-center text-white bg-dark{% endblock body_class %}
 {% block content %}
 
-<div class="d-flex w-100 h-100 p-3 flex-column">
-    {% include 'tracker/includes/navbar.html' %}
+    <div class="d-flex w-100 h-100 p-3 flex-column">
+        {% include 'tracker/includes/navbar.html' %}
 
-  <main class="px-3">
-      <h1><a href="{{ instance.link }}">{{ instance.name }}</a></h1>
-              <h4 class="text-white">Lowest recorded price: {{ price }}</h4>
-              <p class="text-white">This product was first added to the database at: <span class="text-danger">{{ instance.date }}</span>
-              <br>It was last modified at: <span class="text-danger">{{ instance.modifiedDate }}</span></p>
+        <main class="px-3">
+            <h1><a href="{{ instance.link }}">{{ instance.name }}</a></h1>
+            <h4 class="text-white">Lowest recorded price: {{ price }}</h4>
+            <p class="text-white">This product was first added to the database at: <span
+                    class="text-danger">{{ instance.date }}</span>
+                <br>It was last modified at: <span class="text-danger">{{ instance.modifiedDate }}</span></p>
 
-                {% if instance.description %}
-                    <div class="card" id="description-card">
-  <div class="card-header">
-      <h4 class="text-muted">Description pulled from store's website</h4>
-  </div>
-  <div class="card-body">
-      <p class="text-muted">{{ instance.description }}</p>
-  </div>
-</div>{% endif %}
-                      <div class="card" id="">
-  <div class="card-header">
-      <h4 class="text-muted">Daily prices</h4>
-  </div>
-  <div class="card-body">
-      <canvas class="bg-light" id="chart"></canvas>
-  </div>
-</div>
+            {% if instance.description %}
+                <div class="card" id="description-card">
+                    <div class="card-header">
+                        <h4 class="text-muted">Description pulled from store's website</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">{{ instance.description }}</p>
+                    </div>
+                </div>{% endif %}
+            <div class="card" id="">
+                <div class="card-header">
+                    <h4 class="text-muted">Daily prices</h4>
+                </div>
+                <div class="card-body">
+                    <canvas class="bg-light" id="chart"></canvas>
+                </div>
+            </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  <script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+            <script>
 
-    var config = {
-      type: 'line',
-      data: {
-        datasets: [{
-          data: {{ chart_values|safe }},
-          label: 'Price in Euros (€)'
-        }],
-        labels: {{ chart_dates|safe }}
-      },
-      options: {
-        responsive: true,
-      }
-    };
+                var config = {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            data: {{ chart_values|safe }},
+                            label: 'Price in Euros (€)'
+                        }],
+                        labels: {{ chart_dates|safe }}
+                    },
+                    options: {
+                        responsive: true,
+                    }
+                };
 
-    window.onload = function() {
-      var ctx = document.getElementById('chart').getContext('2d');
-      window.myPie = new Chart(ctx, config);
-    };
+                window.onload = function () {
+                    var ctx = document.getElementById('chart').getContext('2d');
+                    window.myPie = new Chart(ctx, config);
+                };
 
-  </script>
-  </main>
-    {% include 'tracker/includes/footer.html' %}
-</div>
+            </script>
+        </main>
+        {% include 'tracker/includes/footer.html' %}
+    </div>
 {% endblock content %}

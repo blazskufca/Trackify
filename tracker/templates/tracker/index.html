@@ -1,29 +1,48 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% load crispy_forms_field %} {% load crispy_forms_filters %} {% load crispy_forms_utils %} {% load static %} {% block head %}
-<link rel="stylesheet" href="{% static 'tracker/Styles_main.css' %}"> {% endblock head %} {% block title %}Home - Trackify{% endblock title %} {% block body_class %}d-flex h-100 text-center text-white bg-dark{% endblock body_class %} {% block content %} <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column"> {% include 'tracker/includes/navbar.html' %} <main class="px-3">
-    <h1>Trackify</h1>
-    <p class="lead">Track prices of items across web stores. All you have to do to get started is to paste in a link to a desired item you want to track! <br>{% if not user.is_authenticated %} <span class="text-danger">If you <a href="{% url 'login' %}">login</a> ( <a href="{% url 'register' %}">or create an account</a>) the site will remember what you tracked! </span> {% endif %} </p>
-    <form method="POST" action="{% url 'index' %}">
-      <div class="input-group justify-content-center flex-fill"> {% csrf_token %} <span class="flex-fill">{{ form|crispy }}</span>
-        <div class="input-group-append">
-          <button class="btn btn-success" type="submit">Track</button>
-        </div>
-      </div>
-    </form> {% if err %} <p class="text-danger text-center">{{ err }}</p>
-    <br> {% endif %} {% if user.is_authenticated %} <div class="card" id="tracked">
-      <div class="card-header">
-        <h4 class="text-muted">Your tracked items</h4>
-      </div>
-      <div class="card-body"> {% if tracked %} {% for item in tracked %} <a href="{% url 'product_details' item.pk %}">{{ item.name }}</a>
-        <hr class="card-spacer text-muted"> {% endfor %} <br>
-        <a id='see-my-btn' class="btn btn-primary btn-sm float-end" href="{% url 'my-tracked' %}" type="button">See your tracked items</a> {% else %} <h4 class="text-danger text-">Nothing here yet! 😞</h4> {% endif %}
-      </div>
-    </div> {% endif %} <div class="card" id="tracked">
-      <div class="card-header">
-        <h4 class="text-muted">Recently added</h4>
-      </div>
-      <div class="card-body"> {% if recently %} {% for item in recently %} <a href="{% url 'product_details' item.pk %}">{{ item.name }}</a>
-        <hr class="card-spacer text-muted"> {% endfor %} <br>
-        <a id='see-my-btn' class="btn btn-primary btn-sm float-end" href="{% url 'all-tracked' %}" type="button">See all tracked items</a> {% else %} <h4 class="text-danger text-">Nothing here yet! 😞</h4> {% endif %} <br>
-      </div>
-    </div>
-  </main> {% include 'tracker/includes/footer.html' %} </div> {% endblock content %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% load crispy_forms_field %} {% load crispy_forms_filters %} {% load crispy_forms_utils %} {% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'tracker/Styles_main.css' %}"> {% endblock head %} {% block title %}Home -
+    Trackify{% endblock title %} {% block body_class %}d-flex h-100 text-center text-white
+    bg-dark{% endblock body_class %} {% block content %}
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column"> {% include 'tracker/includes/navbar.html' %}
+        <main class="px-3">
+            <h1>Trackify</h1>
+            <p class="lead">Track prices of items across web stores. All you have to do to get started is to paste in a
+                link to a desired item you want to track! <br>{% if not user.is_authenticated %}
+                    <span class="text-danger">If you <a href="{% url 'login' %}">login</a> ( <a
+                            href="{% url 'register' %}">or create an account</a>) the site will remember what you tracked! </span> {% endif %}
+            </p>
+            <form method="POST" action="{% url 'index' %}">
+                <div class="input-group justify-content-center flex-fill"> {% csrf_token %} <span
+                        class="flex-fill">{{ form|crispy }}</span>
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="submit">Track</button>
+                    </div>
+                </div>
+            </form> {% if err %} <p class="text-danger text-center">{{ err }}</p>
+            <br> {% endif %} {% if user.is_authenticated %}
+            <div class="card" id="tracked">
+                <div class="card-header">
+                    <h4 class="text-muted">Your tracked items</h4>
+                </div>
+                <div class="card-body"> {% if tracked %} {% for item in tracked %}
+                    <a href="{% url 'product_details' item.pk %}">{{ item.name }}</a>
+                    <hr class="card-spacer text-muted"> {% endfor %} <br>
+                    <a id='see-my-btn' class="btn btn-primary btn-sm float-end" href="{% url 'my-tracked' %}"
+                       type="button">See your tracked items</a> {% else %}
+                    <h4 class="text-danger text-">Nothing here yet! 😞</h4> {% endif %}
+                </div>
+            </div> {% endif %}
+            <div class="card" id="tracked">
+                <div class="card-header">
+                    <h4 class="text-muted">Recently added</h4>
+                </div>
+                <div class="card-body"> {% if recently %} {% for item in recently %}
+                    <a href="{% url 'product_details' item.pk %}">{{ item.name }}</a>
+                    <hr class="card-spacer text-muted"> {% endfor %} <br>
+                    <a id='see-my-btn' class="btn btn-primary btn-sm float-end" href="{% url 'all-tracked' %}"
+                       type="button">See all tracked items</a> {% else %}
+                    <h4 class="text-danger text-">Nothing here yet! 😞</h4> {% endif %} <br>
+                </div>
+            </div>
+        </main>
+        {% include 'tracker/includes/footer.html' %} </div> {% endblock content %}
